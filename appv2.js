@@ -1,7 +1,7 @@
 // Todo:
 
 // V 1. function to pull text on submit button click, and return it to a variable as a string
-// 2. function to convert string to an array, to be analyzed
+// V 2. function to convert string to an array, to be analyzed
 // 3. function to convert array into an object
 // 4. function to do word count
 //    a. for each loop sending each element into an object, counting each element in variable "wordcount"
@@ -14,27 +14,38 @@
 //     separate each into a separate array and join all the characters and count .length
 // 8. function to inject counter variables for word stats back into the DOM, and remove the .hidden class when done
 
-function textCollector () {
+function textAnalyzer () {
 
   var allText
   $('form.textform').submit(function(event){
     event.preventDefault();
     allText = $('div > textarea').val();
     // console.log(allText);
-    return allText;
+    var specialsRemove = removeSpecial(allText);
+    var textArray = textToArray(specialsRemove);
+    console.log(textArray);
   })
 }
 
 //return true if submitted text is a number AND has no white space
-function isNumber (text) {
-  regNum = new RegExp('[0-9]+');
-  regNoSpace = new RegExp('^[^\s]+$');
-    if ((regNum.test(text)) === true && (regNoSpace.test(text) === true)) {
-      return true;
-    }
-      return false;
-}
+function hasNumber (text) { // method name is confusing
+  // Really pay attention to variable hoisting
 
+  var regNum = new RegExp('[0-9]+'); // this matches the string "a9"
+  var regNoSpace = new RegExp('^[^\s]+$');
+
+  // indentation represents blocks: functions, while, for, if, switch, etc.
+  // quality syntax: indentation (using tabs vs. spaces, tab length, etc.)
+  //                 variable names
+  //                 appropriate use of functions
+
+  if ((regNum.test(text)) === true && (regNoSpace.test(text) === true)) {
+    return true;
+  }
+
+  return false;
+}
+//  "5".LowerCase = 5, "%".toUpperCase = %
 //removes special characters (but leaves spaces) (not including numbers from string)
 function removeSpecial (text) {
   if(text) {
@@ -42,11 +53,11 @@ function removeSpecial (text) {
     var upper = text.toUpperCase();
     var result = "";
     for(var i=0; i<lower.length; ++i) {
-      if(isNumber(text[i]) || (lower[i] != upper[i]) || (lower[i].trim() === '')) {
+      if(hasNumber(text[i]) || (lower[i] != upper[i]) || (lower[i].trim() === '')) {
         result += text[i];
       }
     }
-    cosole.log(result);
+    console.log(result);
     return result;
   }
   return '';
@@ -59,13 +70,6 @@ function textToArray(text) {
   var textSplit = text.split(" ");
   console.log(textSplit);
   return textSplit;
-}
-
-function textAnalyzer() {
-  var inputText = textCollector();
-  var specialsRemove = removeSpecial(inputText);
-  var textArray = textToArray(specialsRemove);
-  console.log(textArray);
 }
 
 // function call
