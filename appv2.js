@@ -18,13 +18,16 @@ var allText;
 function textAnalyzer () {
   $('form.js-textform').submit(function(event){
     event.preventDefault();
-    allText = $('div > textarea').val();
-    var wordArray = ArraySplitToWord(allText);
-    console.log(wordArray);
-    var uniqWord = UniqueWordobj(wordArray);
-    console.log(uniqWord);
-    var sentArray = ArraySplitToSent(allText);
+    allText = $('.js-textarea').val();
+    console.log(allText);
+    htmlVarInjector(allText, '.js-raw-text');
+    // var wordArray = ArraySplitToWord(allText);
+    // console.log(wordArray);
+    // var uniqWord = UniqueWordobj(wordArray);
+    // console.log(uniqWord);
+    var sentArray = arraySplitToSent(allText);
     console.log(sentArray);
+
   })
 }
 
@@ -100,8 +103,8 @@ function removeSpecial (text) {
 
 
 
-// converts the text to an array splitting the index at spaces and new line
-function ArraySplitToWord(text) {
+// converts the text to an array splitting the index at spaces and new line ignores special characters
+function arraySplitToWord(text) {
   var wordSplit = text.split(/ |\n/);
   console.log(wordSplit);
   return wordSplit;
@@ -112,7 +115,7 @@ function ArraySplitToWord(text) {
 // if sentences do not end with standard punctuation, count line breaks
 // outputs an array of sentences
 
-function ArraySplitToSent(text) {
+function arraySplitToSent(text) {
   var standardSentEx = new RegExp('/[\.!\?"] /');
   var sentenOut = [];
   if (standardSentEx.test(text) === true) {
@@ -127,7 +130,7 @@ function ArraySplitToSent(text) {
 // creates an object out of an array by posting and counting the
 // uniqKeys of the object. returns a count of the unique keys
 // storing the object for (possibly) later use
-function UniqueWordobj(array) {
+function uniqueWordCount(array) {
   var keyCount = 0;
   var uniObj = {};
   var id = 0;
@@ -142,11 +145,28 @@ function UniqueWordobj(array) {
 }
 
 
-// injects code into the Dom
-function domInjector(varr, clas, obj) {
 
 
+// Creates html orderered list elements based on the
+// contents of an array, and outputs the element
+function createOlWithClass (arr, clas) {
+	var OlHtml = ''
+	arr.forEach(function (el) {
+		Olhtml += '<li>' + el + '</li>'
+	})
+	  OlHtml = '<ol class=' + clas + '>' + OlHtml + '</ol>';
+    return Olhtml
 }
+
+// injects variables into the Dom
+function htmlVarInjector(txtvar, clas) {
+  $(clas).text(txtvar);
+  if( $('dl').hasCLass('hidden')) {
+    $('dl.text-report').removeClass('hidden');
+  }
+}
+
 
 // function call
 textAnalyzer();
+// htmlVarInjector(allText, 'js-raw-text');
