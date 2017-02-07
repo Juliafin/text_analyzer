@@ -13,22 +13,57 @@
 //    d. for the original array, designate line breaks (and maybe other things) as sentence enders,
 //     separate each into a separate array and join all the characters and count .length
 // 8. function to inject counter variables for word stats back into the DOM, and remove the .hidden class when done
+var allText;
 
 function textAnalyzer () {
-
-  var allText
-  $('form.textform').submit(function(event){
+  $('form.js-textform').submit(function(event){
     event.preventDefault();
     allText = $('div > textarea').val();
-    // console.log(allText);
-    var specialsRemove = removeSpecial(allText);
-    var textArray = textToArray(specialsRemove);
-    console.log(textArray);
+    var wordArray = ArraySplitToWord(allText);
+    console.log(wordArray);
+    var uniqWord = UniqueWordobj(wordArray);
+    console.log(uniqWord);
+    var sentArray = ArraySplitToSent(allText);
+    console.log(sentArray);
   })
 }
 
+// returns an array containing the lengths of all of the words
+// Make sure the input array contains all characters, separated as
+// ["el1", "el2", etc]
+function totalWordLen(array) {
+  var wordLengthsAr = [];
+  var totalLength = 0;
+  array.forEach(function(element){
+    if (element !== "" && element !== " ") {
+    wordLengthsAr.push(element.length);
+    totalLength+= element.length
+    }
+  })
+  // console.log(wordLengths);
+  return totalLength;
+}
+
+function wordAvg(wLen, wCount) {
+  var avg = wlen / wCount;
+  return avg;
+  }
+
+// returns the word count of an array
+function totalWordCount(array) {
+  var wordCount = 0
+  array.forEach(function(element){
+    if (element !== "" && element !== " ") {
+      wordCount += 1;
+    }
+  })
+  // console.log(wordCount);
+  return wordCount;
+}
+
+
 //return true if submitted text is a number AND has no white space
-function hasNumber (text) { // method name is confusing
+function hasNumberNoSpc (text) { // method name is confusing
   // Really pay attention to variable hoisting
 
   var regNum = new RegExp('[0-9]+'); // this matches the string "a9"
@@ -48,12 +83,12 @@ function hasNumber (text) { // method name is confusing
 //  "5".LowerCase = 5, "%".toUpperCase = %
 //removes special characters (but leaves spaces) (not including numbers from string)
 function removeSpecial (text) {
-  if(text) {
+  if (text) {
     var lower = text.toLowerCase();
     var upper = text.toUpperCase();
     var result = "";
     for(var i=0; i<lower.length; ++i) {
-      if(hasNumber(text[i]) || (lower[i] != upper[i]) || (lower[i].trim() === '')) {
+      if(hasNumberNoSpc(text[i]) || (lower[i] != upper[i]) || (lower[i].trim() === '')) {
         result += text[i];
       }
     }
@@ -65,11 +100,52 @@ function removeSpecial (text) {
 
 
 
-// converts the text to an array splitting the index at spaces
-function textToArray(text) {
-  var textSplit = text.split(" ");
-  console.log(textSplit);
-  return textSplit;
+// converts the text to an array splitting the index at spaces and new line
+function ArraySplitToWord(text) {
+  var wordSplit = text.split(/ |\n/);
+  console.log(wordSplit);
+  return wordSplit;
+}
+
+// converts the text to an array of sentences:
+// tests whether it is a dictionary sentence or one without punctuation
+// if sentences do not end with standard punctuation, count line breaks
+// outputs an array of sentences
+
+function ArraySplitToSent(text) {
+  var standardSentEx = new RegExp('/[\.!\?"] /');
+  var sentenOut = [];
+  if (standardSentEx.test(text) === true) {
+    sentenOut = text.split(standardSent);
+    return sentenOut
+    } else {
+    sentenOut = text.split("\n");
+    return sentenOut;
+    }
+}
+
+// creates an object out of an array by posting and counting the
+// uniqKeys of the object. returns a count of the unique keys
+// storing the object for (possibly) later use
+function UniqueWordobj(array) {
+  var keyCount = 0;
+  var uniObj = {};
+  var id = 0;
+  array.forEach(function(key){
+    if (uniObj[key] === undefined) {
+    uniObj[key] = id++;
+    keyCount += 1;
+    }
+  })
+  console.log(keyCount)
+  return keyCount;
+}
+
+
+// injects code into the Dom
+function domInjector(varr, clas, obj) {
+
+
 }
 
 // function call
