@@ -13,28 +13,89 @@
 //    d. for the original array, designate line breaks (and maybe other things) as sentence enders,
 //     separate each into a separate array and join all the characters and count .length
 // 8. function to inject counter variables for word stats back into the DOM, and remove the .hidden class when done
-var allText;
 
-function textAnalyzer () {
+
+// code definition file
+var uniqueWordObj = {};
+
+function formListenPullAnalyze () {
+  var allText = "";
   $('form.js-textform').submit(function(event){
     event.preventDefault();
     allText = $('.js-textarea').val();
     console.log(allText);
+    // Text as inputed //
+    // Text grabbed from textArea
     htmlVarInjector(allText, '.js-raw-text');
-    // var wordArray = ArraySplitToWord(allText);
-    // console.log(wordArray);
-    // var uniqWord = UniqueWordobj(wordArray);
-    // console.log(uniqWord);
-    var sentArray = arraySplitToSent(allText);
-    console.log(sentArray);
+
+    // Text without special characters //
+    // Raw text put through removeSpecial function to
+    // remove special characters !@#$%^&*()
+    var textNoSp = removeSpecial(allText);
+    htmlVarInjector(textNoSp, '.js-text-no-specials');
+
+    // Word count //
+    // Text is split into an array of words
+    // The elements of the array of words are counted
+    var wordArray = arraySplitToWord(allText);
+    var wordCount = totalWordCount(wordArray);
+    htmlVarInjector(wordCount, ".js-word-count")
+
+    // Word count without special characters
+    // text with no special characters is split into
+    // into an array of words
+    // The elements of the array of words are counted
+    var wordArrayNoSp = arraySplitToWord(textNoSp);
+    var wordCountNoSp = totalWordCount(wordArrayNoSp);
+    htmlVarInjector(wordCountNoSp, '.js-word-count-no-special');
+
+    //  Unique word Count //
+    // The array of words is sort into an object of unique words
+    // The count of unique words is returned
+    var uniWordCount = uniqueWordCount(wordArray);
+    htmlVarInjector(uniWordCount, '.js-unique-word-count');
+
+    // Average word length //
+    // The array of words is counted into individual characters and the count returned
+    // The total character length is divided by the number of words
+    // (measured by the number of elements in the word array)
+    var totalWordLength = totalCharLen(wordArray);
+    var averageWordLength = wordAvg(totalWordLength, wordCount);
+    htmlVarInjector(averageWordLength, '.js-average-word-length');
+
+    // Average word length no special characters //
+    // Same as average word length, except the word array with no special
+    // characters is used as the initial input
+    var totalWordLengthNoSp = totalCharLen(wordArrayNoSp);
+    var averageWordLengthNoSp = wordAvg(totalWordLengthNoSp, wordCountNoSp);
+    htmlVarInjector(averageWordLengthNoSp, '.js-average-word-length-no-special');
+
+    // Average sentence length //
+    // the total word count divided by the number of sentences
+    var sentenceArray = arraySplitToSent(allText);
+    var numberofSentences = totalWordCount(sentenceArray);
+    var sentenceLength = wordAvg(wordCount, numberofSentences);
+    htmlVarInjector(sentenceLength, '.js-average-sentence-length');
+
+    // Unique word list //
+    // The intentional pass-by-reference on the uniqueWordObj created by
+    // the uniqueWordCount function is used to obtain the keys of the Object
+    // containing all of the unique words. That is fed into the ordered list
+    // html creator function
+    var uniquewordArr = Object.keys(uniqueWordObj)
+    var uniquewordOL = createOlWithClass(uniquewordArr, "unique words")
+    $('.js-unique-word-list').append(uniquewordOL);
 
   })
 }
 
+// function call
+
+formListenPullAnalyze();
+
 // returns an array containing the lengths of all of the words
-// Make sure the input array contains all characters, separated as
-// ["el1", "el2", etc]
-function totalWordLen(array) {
+// takes an array of words as an input
+function totalCharLen(array) {
   var wordLengthsAr = [];
   var totalLength = 0;
   array.forEach(function(element){
@@ -48,18 +109,18 @@ function totalWordLen(array) {
 }
 
 function wordAvg(wLen, wCount) {
-  var avg = wlen / wCount;
+  var avg = wLen / wCount;
   return avg;
   }
 
 // returns the word count of an array
 function totalWordCount(array) {
   var wordCount = 0
-  array.forEach(function(element){
+  array.forEach (function(element){
     if (element !== "" && element !== " ") {
       wordCount += 1;
     }
-  })
+  });
   // console.log(wordCount);
   return wordCount;
 }
@@ -132,11 +193,10 @@ function arraySplitToSent(text) {
 // storing the object for (possibly) later use
 function uniqueWordCount(array) {
   var keyCount = 0;
-  var uniObj = {};
   var id = 0;
   array.forEach(function(key){
-    if (uniObj[key] === undefined) {
-    uniObj[key] = id++;
+    if (uniqueWordObj[key] === undefined) {
+    uniqueWordObj[key] = id++;
     keyCount += 1;
     }
   })
@@ -145,28 +205,22 @@ function uniqueWordCount(array) {
 }
 
 
-
-
 // Creates html orderered list elements based on the
 // contents of an array, and outputs the element
 function createOlWithClass (arr, clas) {
 	var OlHtml = ''
 	arr.forEach(function (el) {
-		Olhtml += '<li>' + el + '</li>'
-	})
+		OlHtml += '<li>' + el + '</li>'
+	});
 	  OlHtml = '<ol class=' + clas + '>' + OlHtml + '</ol>';
-    return Olhtml
+    return OlHtml;
 }
 
 // injects variables into the Dom
 function htmlVarInjector(txtvar, clas) {
-  $(clas).text(txtvar);
-  if( $('dl').hasCLass('hidden')) {
+  var htmlP = "<p>" + txtvar + "<p>"
+  $(clas).append(htmlP);
+  if ($('dl').hasClass("hidden")) {
     $('dl.text-report').removeClass('hidden');
   }
 }
-
-
-// function call
-textAnalyzer();
-// htmlVarInjector(allText, 'js-raw-text');
