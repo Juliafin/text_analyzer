@@ -25,6 +25,7 @@ function formListenPullAnalyze() {
   $('form.js-textform').submit(function(event) {
     event.preventDefault();
     allText = $('.js-textarea').val();
+    htmlRemover();
     // console.log(allText);
     // Text as inputed //
     // Text grabbed from textArea
@@ -267,6 +268,7 @@ function createOlWithClass(arr, clas) {
 }
 
 
+// Modified
 function createOlFreqWordWithClass(arr, clas, obj) {
   var OlHtml = '';
   arr.forEach(function(el, index, ar) {
@@ -277,11 +279,41 @@ function createOlFreqWordWithClass(arr, clas, obj) {
 }
 
 
-// injects variables into the Dom
+// Injects variables into the Dom
 function htmlVarInjector(txtvar, clas) {
   var htmlP = "<p>" + txtvar + "<p>"
   $(clas).append(htmlP);
   if ($('dl').hasClass("hidden")) {
     $('dl.text-report').removeClass('hidden');
   }
+}
+
+function htmlRemover() {
+  if ($('.js-raw-text p').length > 0) {
+    $('.js-raw-text p').remove();
+  };
+  if ($('.js-text-no-specials p').length > 0) {
+    $('.js-text-no-specials p').remove();
+  };
+  if ($('.js-word-count p').length > 0) {
+    $('.js-word-count p').remove();
+  };
+  if ($('.js-word-count-no-special p').length > 0) {
+    $('.js-word-count-no-special p').remove();
+  };
+  if ($('.js-unique-word-count p').length > 0) {
+    $('.js-unique-word-count p').remove();
+  };
+  if ($('.js-average-word-length p').length > 0) {
+    $('.js-average-word-length p').remove();
+  };
+  if ($('.js-average-word-length-no-special p').length > 0) {
+    $('.js-average-word-length-no-special p').remove();
+  };
+  if ($('.js-unique-word-list li').length > 0) {
+    $('.js-unique-word-list li').remove();
+  };
+  if ($('.js-frequent-word-list li').length > 0) {
+    $('.js-frequent-word-list li').remove();
+  };
 }
