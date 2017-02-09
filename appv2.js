@@ -287,7 +287,7 @@ function htmlVarInjector(txtvar, clas) {
     $('dl.text-report').removeClass('hidden');
   }
 }
-
+// Removes html from the DOM for each stat
 function htmlRemover() {
   if ($('.js-raw-text p').length > 0) {
     $('.js-raw-text p').remove();
@@ -311,9 +311,9 @@ function htmlRemover() {
     $('.js-average-word-length-no-special p').remove();
   };
   if ($('.js-unique-word-list li').length > 0) {
-    $('.js-unique-word-list li').remove();
+    $('.js-unique-word-list ol').remove();
   };
   if ($('.js-frequent-word-list li').length > 0) {
-    $('.js-frequent-word-list li').remove();
+    $('.js-frequent-word-list ol').remove();
   };
 }
