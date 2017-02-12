@@ -169,11 +169,19 @@ function hasNumberNoSpc(text) {
   return false;
 }
 
+/*
+  doing something with a couple of vars
+  for loop
+    if
+    else
+*/
 
 // "5".LowerCase = 5, "%".toUpperCase = %
 // Filters characters that have the same upper and lower case results
 // removes special characters (but leaves spaces) (not including numbers from string)
-function removeSpecial(text) {
+function removeSpecial(text) { // removeSpecialChars
+  // return text.replace(/[^a-zA-Z0-9\s]/g, "");
+
   if (text) {
     var lower = text.toLowerCase();
     var upper = text.toUpperCase();
@@ -202,7 +210,7 @@ function arraySplitToWord(text) {
 // tests whether it is a dictionary sentence or one without punctuation
 // if sentences do not end with standard punctuation, count line breaks
 // outputs an array of sentences
-function arraySplitToSent(text) {
+function arraySplitToSent(text) { // textToLineArray()
   var standardSentEx = new RegExp('/[\.!\?"] /');
   var sentenOut = [];
   if (standardSentEx.test(text) === true) {
@@ -283,6 +291,8 @@ function createOlWithClass(arr, clas, optionalObj) {
   return olHtml;
 }
 
+// if(obj)
+
 /*
 function foo(a, b, c, d){};
 function foo(){};
@@ -304,14 +314,44 @@ function createOlFreqWordWithClass(arr, clas, obj) {
 
 
 // Injects variables into the Dom
+// concatVarWithHtmlAndAppendToClass()
+// appendTextToClass(text, class)
+// why append to class?
+// displayResult(result, class)
 function htmlVarInjector(txtvar, clas) {
+  /*
+  var = htmlStr = '';
+
+  if(isArray(result)) {
+    htmlStr = getHtmlForArray(result)
+  } else {
+    htmlStr = "<p>" + result + "<p>";
+  }
+
+  $(clas).append(htmlStr);
+  */
+
+
+  // check to see what result is?
+  // if result is an array
+  //  var html = getOrderedList(result);
+  // else result is object
   var htmlP = "<p>" + txtvar + "<p>"
   $(clas).append(htmlP);
+
   if ($('dl').hasClass("hidden")) {
     $('.text-report').removeClass('hidden');
   }
+
+  // whatever the previous function came up with
+  // now append to the class
 }
 // Removes html from the DOM for each analytics class
-function htmlRemover() {
+function htmlRemover() { // clearResults
   $('.text-report p, .text-report ol').remove();
 }
+
+// Good Programming Concepts
+// 1. YAGNI - You ain't gonna need it (General)
+// 2. SLAP - simple livel of abstraction principal (Small Talk)
+// 3. Use names which explain meaning (General)
