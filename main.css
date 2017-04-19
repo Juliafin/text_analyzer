@@ -13,10 +13,13 @@ body {
 main {
   max-width: 960px;
   margin: 0 auto;
+  text-align: center;
 }
 
 label {
   display: block;
+  margin-bottom: 5%;
+  margin-top: 5%;
 }
 
 .hidden {
@@ -25,4 +28,40 @@ label {
 
 .text-report dt:after {
   content: ": ";
+}
+
+form.js-textform {
+  display: inline-block;
+  position: relative;
+  width: 900px;
+}
+
+dt {
+  margin-top: 7%;
+  margin-bottom: 6%;
+  font-size: 1.3em;
+}
+
+button {
+  margin-top: 2%;
+  outline: none;
+  border: 2px solid darkolivegreen;
+  border-radius: 3px;
+  background-color: beige;
+  width: 15%;
+  position: relative;
+  height: 50px;
+}
+
+dd p:hover,
+dd li:hover {
+  color: green;
+  transition: color ease-in-out 300ms;
+}
+
+textarea#user-text {
+    width: 80%;
+    resize: none;
+    border-radius: 4px;
+    border: 1px #82cd89 solid;
 }

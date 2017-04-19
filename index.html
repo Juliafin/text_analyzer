@@ -5,6 +5,7 @@
     <meta charset="utf-8">
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+    <link rel="stylesheet" type="text/css" href="float-grid.css">
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
@@ -22,38 +23,58 @@
                 </div>
             </form>
 
-            <dl class="hidden text-report">
-
+            <dl class="hidden text-report row">             
+              <div class="col-6">
                 <dt>Text as inputted</dt>
                 <dd class="js-raw-text"></dd>
-
+              </div>
+              <div class="col-6">
                 <dt>Text without special characters</dt>
                 <dd class="js-text-no-specials"></dd>
+              </div>
 
+
+            </dl>
+
+            <dl class="hidden text-report row">
+              <div class="col-4">
                 <dt>Word count</dt>
                 <dd class="js-word-count"></dd>
-
+              </div>
+              <div class="col-4">              
                 <dt>Word count without special characters</dt>
                 <dd class="js-word-count-no-special"></dd>
-
+              </div>
+              <div class="col-4">              
                 <dt>Unique word count</dt>
                 <dd class="js-unique-word-count"></dd>
+              </div>
+            </dl>
 
+            <dl class="hidden text-report row ">
+              <div class="col-4">
                 <dt>Average word length</dt>
                 <dd class="js-average-word-length"></dd>
-
+              </div>
+              <div class="col-4">
                 <dt>Average word length without special characters</dt>
                 <dd class="js-average-word-length-no-special"></dd>
-
+              </div>
+              <div class="col-4">         
                 <dt>Average sentence length</dt>
                 <dd class="js-average-sentence-length" ></dd>
+              </div>
+            </dl>
 
+            <dl class="hidden text-report row ">
+              <div class="col-6">  
                 <dt>Unique word list</dt>
                 <dd class="js-unique-word-list"></dd>
-
+              </div>
+              <div class="col-6">
                 <dt>Frequent word list</dt>
                 <dd class="js-frequent-word-list"></dd>
-
+              </div>
             </dl>
         </main>
     </div>
