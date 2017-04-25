@@ -41,8 +41,12 @@ form.js-textform {
 dt {
   margin-top: 7%;
   margin-bottom: 6%;
-  font-size: 1.em;
-  height: 7vw;
+  min-height: 5vw;
+  background-color: #6ddcdc;
+  border-radius: 5px;
+  line-height: 23px;
+  padding-top: 3%;
+  font-size: 1.4vw;
 }
 
 button {
