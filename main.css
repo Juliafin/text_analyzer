@@ -32,10 +32,9 @@ label {
 }
 
 form.js-textform {
-  display: inline-block;
   position: relative;
-  width: 72vw;
   font-size: 2vw;
+  margin: 0 auto;
 }
 
 dt {
@@ -52,12 +51,21 @@ dt {
 button {
   margin-top: 2%;
   outline: none;
-  border: 2px solid darkolivegreen;
+  border: none;
   border-radius: 3px;
-  background-color: beige;
+  background-color: #6ddcdc;
   width: 15%;
   position: relative;
   height: 50px;
+  transition: filter 200ms linear;
+}
+
+button:hover {
+  filter: brightness(75%);
+  }
+
+button:active {
+    filter: brightness(150%);
 }
 
 dd p:hover,
@@ -70,5 +78,6 @@ textarea#user-text {
     width: 80%;
     resize: none;
     border-radius: 4px;
-    border: 1px #82cd89 solid;
+    border: 1px #7b2822 solid;
+    height: 20vw;
 }
